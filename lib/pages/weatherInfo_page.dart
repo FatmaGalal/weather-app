@@ -4,6 +4,8 @@ import 'package:weather_app/cubit/get_weather_cubit/get_weather-cubit.dart';
 import 'package:weather_app/models/weather_model.dart';
 
 class WeatherinfoPage extends StatelessWidget {
+  const WeatherinfoPage({super.key});
+
   //final  WeatherModel weatherModel;
 
   @override
@@ -11,7 +13,6 @@ class WeatherinfoPage extends StatelessWidget {
     WeatherModel? weatherModel = BlocProvider.of<GetWeatherCubit>(
       context,
     ).weatherModel;
-    // TODO: implement build
 
     return Container(
       width: double.infinity,
