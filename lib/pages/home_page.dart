@@ -6,7 +6,7 @@ import 'package:weather_app/pages/noweather_page.dart';
 import 'package:weather_app/pages/search_page.dart';
 import 'package:weather_app/pages/weatherInfo_page.dart';
 
-class HomePage extends StatefulWidget{
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
@@ -19,38 +19,44 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-      
+        backgroundColor: BlocProvider.of<WeatherCubit>(context).weatherModel
+            ?.getThemeColor(
+              BlocProvider.of<WeatherCubit>(
+                    context,
+                  ).weatherModel?.weatherCondition ??
+                  'Clear',
+            ),
         actions: [
-          IconButton(onPressed: (){
-Navigator.push(context, MaterialPageRoute(builder: (context)
-{
-  return SearchPage();
-},),);
-          },
-          icon: Icon(Icons.search),
-          ), 
-          
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return SearchPage();
+                  },
+                ),
+              );
+            },
+            icon: Icon(Icons.search),
+          ),
         ],
-        
-        title: Text('Weather'), 
-        
-        
+
+        title: Text('Weather'),
       ),
-      body: BlocBuilder<GetWeatherCubit, WeatherState>(
+      body: BlocBuilder<WeatherCubit, WeatherState>(
         builder: (context, state) {
-          if(state is NoWeatherState)
-          {
+          if (state is WeatherLoadingState) {
+            return Center(child: CircularProgressIndicator());
+          } else if (state is NoWeatherState) {
             return NoweatherPage();
-          }
-          else if(state is WeatherLoadedState)
-          {
+          } else if (state is WeatherSuccessState) {
             return WeatherinfoPage();
-          }
-          else if(state is WeatherFailureState)
-          {
+          } else if (state is WeatherFailureState) {
             return Text(state.errorMessage);
+          } else {
+            return Text('oOops!');
           }
-          else {return Text('oOops!');}
         },
       ),
     );

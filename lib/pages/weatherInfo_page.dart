@@ -10,7 +10,7 @@ class WeatherinfoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WeatherModel? weatherModel = BlocProvider.of<GetWeatherCubit>(
+    WeatherModel? weatherModel = BlocProvider.of<WeatherCubit>(
       context,
     ).weatherModel;
 
@@ -19,10 +19,8 @@ class WeatherinfoPage extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            BlocProvider.of<GetWeatherCubit>(
-                  context,
-                ).weatherModel?.getThemeColor(
-                  BlocProvider.of<GetWeatherCubit>(
+            BlocProvider.of<WeatherCubit>(context).weatherModel?.getThemeColor(
+                  BlocProvider.of<WeatherCubit>(
                         context,
                       ).weatherModel?.weatherCondition ??
                       '',
